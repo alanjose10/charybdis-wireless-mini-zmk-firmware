@@ -4,16 +4,6 @@
 
 / {
     behaviors {
-        // ht_num_func: homerow_mod {
-        //     compatible = "zmk,behavior-hold-tap";
-        //     #binding-cells = <2>;
-        //     flavor = "tap-preferred";
-        //     tapping-term-ms = <260>; // triggers the hold behavior when the tapping-term-ms has expired
-        //     quick-tap-ms = <220>; // If you press a tapped hold-tap again within quick-tap-ms milliseconds of the first press, it will always trigger the tap behavior.
-        //     require-prior-idle-ms = <185>; // like quick-tap-ms however it will apply for any non-modifier key pressed before it
-        //     bindings = <&kp>, <&kp>;  // hold, tap
-        // };
-
         mm_f1: num_or_f1 {
             compatible    = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -198,49 +188,13 @@
             bindings = <&mo>, <&kp>; // hold = layer, tap = keycode
         };
 
-        httl: ht_two_layers {
-            compatible = "zmk,behavior-hold-tap";
-            bindings = <&mo>, <&to>;
-            #binding-cells = <2>;
-            flavor = "balanced";
-            tapping-term-ms = <125>;
-        };
-
-        td_layers: td_layer_swap {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            bindings = <&to 0>, <&to 4>; // tap, double_tap
-        };
-
-        td_clk_scrl: td_click_or_scroll {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <250>;
-            bindings = <&mkp RCLK>, <&mo 8>;  // tap/hold, double_tap
-        };
-
-        td_bore: BASE_or_EXTRA {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            bindings = <&mo 5>, <&to 0>;
-        };
-
-        // Combo action: tap switches to last app (Alt+Tab), hold opens "all windows" (Ctrl+F10).
-        ht_combo_all_windows: ht_combo_all_windows {
+        thumb_mt: thumb_mod_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <180>;
-            bindings = <&combo_all_windows_hold &combo_all_windows_tap>; // hold, tap
-        };
-
-        // Combo action: tap switches to last app window (Alt+Grave), hold opens app-window overview (Ctrl+F7).
-        ht_combo_app_windows: ht_combo_app_windows {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <180>;
-            bindings = <&combo_app_windows_hold &combo_app_windows_tap>; // hold, tap
+            flavor = "hold-preferred";
+            tapping-term-ms = <220>;
+            quick-tap-ms = <190>;
+            bindings = <&kp>, <&kp>;
         };
 
         mm_qm_ex: question_exclamation {

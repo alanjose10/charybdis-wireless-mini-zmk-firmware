@@ -5,9 +5,9 @@
     /* base processor chain on all layers */
     input-processors = <&zip_xy_scaler 5 5>;
 
-    /* layer-8 scroll override */
+    /* scroll override */
     scroller: scroller {
-        layers           = <7>;
+        layers           = <2>;
         input-processors = <
             &zip_xy_scaler 1 15                              // Scales the scroll speed
             &zip_xy_to_scroll_mapper                         // Converts XY movement to scroll events
@@ -15,9 +15,9 @@
         >;
     };
 
-    /* layer-7 slow-pointer override */
+    /* slow-pointer active on SHORTCUTS layer */
     slow_pointer: slow_pointer {
-        layers           = <6>;
+        layers           = <3>;
         input-processors = <&zip_xy_scaler 2 6>;
     };
 };
