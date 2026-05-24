@@ -24,12 +24,13 @@
 // ╰──────┴──────┴──────┼──────┼──────┼──────┤  ├──────┼──────┼──────┴──────┴──────┴──────╯
 //                         36     37     38        39     40
 //                      ╰──────┴──────┴──────╯  ╰──────┴──────╯
-// #define BASE      0
-// #define NAV       1
-// #define SYM       2
-// #define SHORTCUTS 3
-// #define ADJ       4   (SHORTCUTS + NAV)
-// #define SYSTEM    5   (SYM + NAV)
+// #define BASE       0
+// #define NAV        1
+// #define SYM        2
+// #define SHORTCUTS  3
+// #define ADJ        4   (SHORTCUTS + NAV)
+// #define SYSTEM     5   (SYM + NAV)
+// #define AUTO_MOUSE 6   (auto-activated by trackball; suppressed during typing)
 
 // This shared keymap builds for prospector and non-prospector firmwares. 
 // This stubs the key bindings that are contained in the prospector module
@@ -129,6 +130,16 @@
 &none         &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4    &none  &none  &none  &none  &none  &none
 &bootloader   &none          &none          &none          &none          &none    &none  &none  &none  &none  &none  &bootloader
                              &trans         &trans         &trans         &trans   &trans
+            >;
+        };
+
+        AUTO_MOUSE {
+            display-name = "Mouse";
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans    &trans  &trans
             >;
         };
     };

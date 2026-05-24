@@ -1,17 +1,30 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
-&trackball_listener {
-    /* base processor chain on all layers */
-    input-processors = <&zip_xy_scaler 5 5>;
+/ {
+    /* Custom temp-layer processor: won't activate while typing (500ms idle required) */
+    zip_auto_mouse: zip_auto_mouse {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+        require-prior-idle-ms = <200>;
+    };
+};
 
-    /* scroll override */
+&trackball_listener {
+    /* Base chain: try to activate AUTO_MOUSE layer 6 (suppressed during typing),
+       and zero out movement until that layer is active */
+    input-processors = <
+        &zip_auto_mouse 6 800
+        &zip_xy_scaler 0 1
+    >;
+
+    /* scroll override — SYM layer; defined first so it takes priority */
     scroller: scroller {
         layers           = <2>;
         input-processors = <
-            &zip_xy_scaler 1 15                              // Scales the scroll speed
-            &zip_xy_to_scroll_mapper                         // Converts XY movement to scroll events
-            &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT) // Inverts the scroll direction
+            &zip_xy_scaler 1 15
+            &zip_xy_to_scroll_mapper
+            &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT)
         >;
     };
 
@@ -19,5 +32,14 @@
     slow_pointer: slow_pointer {
         layers           = <3>;
         input-processors = <&zip_xy_scaler 2 6>;
+    };
+
+    /* auto-mouse: normal speed when intentionally using the trackball */
+    auto_mouse: auto_mouse {
+        layers           = <6>;
+        input-processors = <
+            &zip_auto_mouse 6 800
+            &zip_xy_scaler 5 5
+        >;
     };
 };
