@@ -62,13 +62,16 @@ Output: `firmwares/charybdis_dongle/colemak_dh/`
 | 3 | SHORTCUTS | hold ESC (key 38) | Mac shortcuts + clicks; slow trackball |
 | 4 | ADJ | SHORTCUTS + NAV | Brightness, volume, F23/F24 |
 | 5 | SYSTEM | SYM + NAV | BT profiles, output, power, bootloader |
+| 6 | AUTO_MOUSE | auto (trackball movement) | Transparent; activates on trackball use |
 
 ADJ and SYSTEM are ZMK conditional layers (`zmk,conditional-layers`) — no dedicated key needed.
+AUTO_MOUSE is activated automatically by `zip_temp_layer` in `charybdis_pointer.dtsi`.
 
 ### Trackball behaviour
-- Default: normal pointer speed
-- SYM active (hold TAB): trackball scrolls
-- SHORTCUTS active (hold ESC): slow pointer
+- Cursor frozen within 200ms of a keypress (auto-mouse layer suppressed)
+- After 200ms typing idle: AUTO_MOUSE activates → normal pointer speed; deactivates after 800ms of no trackball movement
+- SYM active (hold TAB): trackball scrolls (takes priority over AUTO_MOUSE)
+- SHORTCUTS active (hold ESC): slow pointer (takes priority over AUTO_MOUSE)
 
 ## colemak_dh keymap design
 
