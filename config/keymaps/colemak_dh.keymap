@@ -32,7 +32,7 @@
 // #define SYSTEM     5   (SYM + NAV)
 // #define AUTO_MOUSE 6   (auto-activated by trackball; suppressed during typing)
 
-// This shared keymap builds for prospector and non-prospector firmwares. 
+// This shared keymap builds for prospector and non-prospector firmwares.
 // This stubs the key bindings that are contained in the prospector module
 // so non-prospector firmware can build.
 #ifndef CONFIG_SHIELD_PROSPECTOR_ADAPTER
@@ -78,7 +78,7 @@
         NAV {
             display-name = "Nav";
             bindings = <
-&none  &none  &msc SCRL_RIGHT  &mmv MOVE_UP    &msc SCRL_LEFT   &none    &kp LC(LEFT)  &mkp LCLK   &mkp RCLK   &kp LC(RIGHT)  &none  &none
+&none  &none  &msc SCRL_RIGHT  &mmv MOVE_UP    &msc SCRL_LEFT   &none    &kp LC(LEFT)  &kp LG(LBKT)   &kp LG(RBKT)   &kp LC(RIGHT)  &none  &none
 &none  &none  &mmv MOVE_LEFT   &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none    &kp LEFT      &kp DOWN    &kp UP      &kp RIGHT      &none  &none
 &none  &none  &msc SCRL_UP     &none           &msc SCRL_DOWN   &none    &kp HOME      &kp PG_DN   &kp PG_UP   &kp END        &none  &none
                                &trans          &trans           &trans   &trans        &trans
