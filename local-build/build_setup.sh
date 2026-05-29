@@ -26,6 +26,8 @@ fi
 if [[ "$SKIP_WEST_UPDATE" == "true" ]]; then
     echo "Skipping west update; using current local module checkouts."
 else
+    # Ignore file mode changes before updating (chmod -R 777 later would dirty every file otherwise)
+    west forall -c 'git config core.fileMode false' 2>/dev/null || true
     echo "Updating west modules..."
     west update
 fi
