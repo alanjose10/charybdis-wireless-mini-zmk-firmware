@@ -6,16 +6,7 @@ This repository offers pre-configured ZMK firmware. It's designed for the [Wirel
 
 ## Overview & Usage
 
-<!-- ![stacked keymap](keymap-drawer/stacked/stacked.svg)
-![combos keymap](keymap-drawer/stacked/combos.svg) -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="keymap-drawer/stacked/stacked-combos-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="keymap-drawer/stacked/stacked-combos-light.png">
-  <img alt="stacked-combos keymap" src="keymap-drawer/stacked/stacked-combos-dark.png">
-</picture>
-
-
-To see all the layers check out the [full render](keymap-drawer/all_layers/all_layers.svg).
+![image](keymap-drawer/all_layers/all_layers.svg)
 
 
 **Keyboard Layers**
