@@ -65,7 +65,7 @@ fi
 
 # Set permissions so users can delete them in their own environment
 echo "Setting permissions on ZMK resources..."
-chmod -R 777 .west zmk zephyr modules zmk-pmw3610-driver prospector-zmk-module
+chmod -R a+rwX .west zmk zephyr modules zmk-pmw3610-driver prospector-zmk-module
 
 # # Debug: confirm checkout
 # echo "    West workspace ready. Project structure:"
