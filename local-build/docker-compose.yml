@@ -4,6 +4,7 @@ services:
     volumes:
       # Bind-mount entire repo
       - ../:/workspaces/zmk:rw
+      - /Users/alan/repos/zmk-mouse-jiggler:/workspaces/zmk-mouse-jiggler:rw
     working_dir: /workspaces/zmk
     environment:
       ENABLE_USB_LOGGING: ${ENABLE_USB_LOGGING:-false}

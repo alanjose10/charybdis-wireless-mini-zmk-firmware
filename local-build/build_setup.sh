@@ -169,7 +169,7 @@ build_firmware() {
 
   # Pass the boards/ module so ZMK can discover the custom shields,
   # and the pmw3610 driver module.
-  local zmk_load_arg="-DZMK_EXTRA_MODULES=$SANDBOX_ROOT/boards;$SANDBOX_ROOT/zmk-pmw3610-driver;$SANDBOX_ROOT/prospector-zmk-module"
+  local zmk_load_arg="-DZMK_EXTRA_MODULES=$SANDBOX_ROOT/boards;$SANDBOX_ROOT/zmk-pmw3610-driver;$SANDBOX_ROOT/prospector-zmk-module;/workspaces/zmk-mouse-jiggler"
   local extra_conf_arg=()
   local extra_dtc_overlay_arg=()
 
