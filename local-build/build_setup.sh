@@ -169,7 +169,9 @@ build_firmware() {
 
   # Pass the boards/ module so ZMK can discover the custom shields,
   # and the pmw3610 driver module.
-  local zmk_load_arg="-DZMK_EXTRA_MODULES=$SANDBOX_ROOT/boards;$SANDBOX_ROOT/zmk-pmw3610-driver;$SANDBOX_ROOT/prospector-zmk-module;$SANDBOX_ROOT/zmk-caffeine;$SANDBOX_ROOT/zmk-dongle-reset"
+  # zmk-caffeine is a west project (config/west.yml), so west already registers it
+  # as a Zephyr module. zmk-dongle-reset lives in this repo.
+  local zmk_load_arg="-DZMK_EXTRA_MODULES=$SANDBOX_ROOT/boards;$SANDBOX_ROOT/zmk-pmw3610-driver;$SANDBOX_ROOT/prospector-zmk-module;$SANDBOX_ROOT/zmk-dongle-reset"
   local extra_conf_arg=()
   local extra_dtc_overlay_arg=()
 

@@ -4,6 +4,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: 280Zo
       url-base: https://github.com/280Zo
+    - name: alanjose10
+      url-base: https://github.com/alanjose10
 
   projects:
     - name: zmk
@@ -16,6 +18,10 @@ manifest:
     - name: prospector-zmk-module
       remote: 280Zo
       revision: main
+    # Shared with the hillside46 config (zmk-config). Bump the tag in both configs together.
+    - name: zmk-caffeine
+      remote: alanjose10
+      revision: v0.1.0
 
   self:
     path: config

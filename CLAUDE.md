@@ -55,8 +55,8 @@ The halves are the same image for both dongles. Switching dongles needs
 | `config/keymap_features/combos.dtsi` | Shared combos — used by ALL keymaps |
 | `config/keymap_features/macros.dtsi` | Shared macros — used by ALL keymaps |
 | `config/trackball/charybdis_pointer.dtsi` | Trackball input processors |
-| `zmk-caffeine/` | In-repo ZMK module: `zmk,behavior-caffeine` keep-awake toggle (passed via `ZMK_EXTRA_MODULES`) |
-| `zmk-dongle-reset/` | In-repo ZMK module: `&dongle_bootloader` / `&dongle_sys_reset`, central-locality reset so a key can reboot the dongle |
+| `config/west.yml` | Manifest. Pulls `zmk-caffeine` (`zmk,behavior-caffeine` keep-awake toggle) from github.com/alanjose10, pinned by tag. The hillside46 config uses it too; bump both configs together |
+| `zmk-dongle-reset/` | In-repo ZMK module: `&dongle_bootloader` / `&dongle_sys_reset`, central-locality reset so a key can reboot the dongle (passed via `ZMK_EXTRA_MODULES`) |
 | `boards/makerdiary/nrf52840_mdk_usb_dongle/` | `nrf52840_mdk_usb_dongle//zmk` board variant: upstream Zephyr board + UF2-bootloader flash layout (app at 0x1000, storage at 0xEC000) |
 | `build.yaml` | Build targets |
 | `local-build/docker-compose.yml` | Docker build config |
@@ -155,7 +155,7 @@ Defined in `config/keymaps/colemak_dh.keymap`:
 
 | Behavior | Type | Notes |
 |----------|------|-------|
-| `ca` | caffeine toggle (`zmk-caffeine` module) | Press to start, press to stop. Every 1s moves one 400ms leg of an `mmv` square (UP/LEFT/DOWN/RIGHT in turn) on the dongle so the Mac stays awake; any keycode press turns it off. Tune via `CAFFEINE_*_MS` defines at the top of the keymap |
+| `ca` | caffeine toggle (`zmk-caffeine` module, west project) | Press to start, press to stop. Every 1s moves one 400ms leg of an `mmv` square (UP/LEFT/DOWN/RIGHT in turn) on the dongle so the Mac stays awake; any keycode press turns it off. Tune via `CAFFEINE_*_MS` defines at the top of the keymap |
 
 ## Combos
 
