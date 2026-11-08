@@ -2,7 +2,7 @@
 # Each entry under `include` becomes a single matrix item in CI and
 # the local build script.
 
-board: [nice_nano//zmk]
+board: [nice_nano//zmk, nrf52840_mdk_usb_dongle//zmk]
 
 include:
 
@@ -11,12 +11,25 @@ include:
     board: nice_nano//zmk
     shield: settings_reset
 
+  - name: settings_reset_mdk
+    board: nrf52840_mdk_usb_dongle//zmk
+    shield: settings_reset
+
   # ── Standard Dongle Firmwares ─────────────────────────────────────────────────
   - name: dongle_standard_nano
     board: nice_nano//zmk
     shield:
       - charybdis_left_dongle
       - charybdis_right_dongle
+      - charybdis_dongle
+    keymap:
+      - colemak_dh
+
+  # ── Makerdiary nRF52840 MDK USB Dongle ────────────────────────────────────────
+  # Dongle only; the halves reuse charybdis_*_dongle from dongle_standard_nano.
+  - name: dongle_standard_mdk
+    board: nrf52840_mdk_usb_dongle//zmk
+    shield:
       - charybdis_dongle
     keymap:
       - colemak_dh

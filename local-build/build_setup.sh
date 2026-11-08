@@ -235,11 +235,13 @@ build_firmware() {
   # Map the entry format to the correct directory name:
   # "bt"                - use charybdis_bt
   # "dongle_standard_nano" - use charybdis_dongle
+  # "dongle_standard_mdk" - use charybdis_dongle_mdk
   # Prospector entries  - use charybdis_dongle_prospector_<board>_<variant>
   # anything else       - just use the original format name
   case "$entry_format" in
     bt)                format_dir="charybdis_bt" ;;
     dongle_standard_nano)   format_dir="charybdis_dongle" ;;
+    dongle_standard_mdk)    format_dir="charybdis_dongle_mdk" ;;
     dongle_prospector_no_sensor|dongle_prospector_nano_no_sensor)
       format_dir="charybdis_dongle_prospector_nice_nanov2_no_sensor"
       ;;
@@ -260,11 +262,12 @@ build_firmware() {
   local firmwares_format_dir
 
   if [[ "$shield" == "settings_reset" ]]; then
-    # Reset firmware goes at top-level (no folder)
+    # Reset firmware goes at top-level (no folder), named after the entry so
+    # per-board variants (settings_reset, settings_reset_mdk) do not overwrite each other.
     firmwares_dir="/workspaces/zmk/firmwares"
     mkdir -p "$firmwares_dir"
     chmod 777 "$firmwares_dir"
-    dest="$firmwares_dir/settings_reset.${artifact_ext}"
+    dest="$firmwares_dir/${entry_format}.${artifact_ext}"
   else
     # Normal builds are structured by format/keymap
     local firmwares_format_dir="/workspaces/zmk/firmwares/${format_dir}"

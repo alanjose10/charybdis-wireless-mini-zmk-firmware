@@ -6,6 +6,8 @@
 - **Left half**: 3 thumb keys (36 = outer, 37 = center, 38 = inner)
 - **Right half**: 2 thumb keys (39 = inner, 40 = outer)
 - **Dongle**: nice_nano (no screen), `dongle_standard_nano` build target
+- **Alt dongle**: makerdiary nRF52840 MDK USB Dongle, `dongle_standard_mdk` build target
+  (board `nrf52840_mdk_usb_dongle//zmk`, defined in `boards/makerdiary/`)
 - **OS**: Mac only
 
 ### Key positions
@@ -29,13 +31,20 @@ docker compose -f local-build/docker-compose.yml run --rm builder
 ```
 
 `build.yaml` is trimmed to only build:
-- `settings_reset`
+- `settings_reset` (nice_nano) and `settings_reset_mdk` (makerdiary dongle)
 - `dongle_standard_nano colemak_dh`
+- `dongle_standard_mdk colemak_dh` (dongle image only)
 
 Output: `firmwares/charybdis_dongle/colemak_dh/`
 - `charybdis_left_dongle.uf2` → flash to left half
 - `charybdis_right_dongle.uf2` → flash to right half
-- `charybdis_dongle.uf2` → flash to dongle
+- `charybdis_dongle.uf2` → flash to nice_nano dongle
+
+Output: `firmwares/charybdis_dongle_mdk/colemak_dh/`
+- `charybdis_dongle.uf2` → flash to makerdiary dongle (double-press its button while plugged in; drive `UF2BOOT`)
+
+The halves are the same image for both dongles. Switching dongles needs
+`settings_reset.uf2` on both halves first, so they drop the old dongle's bond.
 
 ## Key files
 
@@ -48,6 +57,7 @@ Output: `firmwares/charybdis_dongle/colemak_dh/`
 | `config/trackball/charybdis_pointer.dtsi` | Trackball input processors |
 | `zmk-caffeine/` | In-repo ZMK module: `zmk,behavior-caffeine` keep-awake toggle (passed via `ZMK_EXTRA_MODULES`) |
 | `zmk-dongle-reset/` | In-repo ZMK module: `&dongle_bootloader` / `&dongle_sys_reset`, central-locality reset so a key can reboot the dongle |
+| `boards/makerdiary/nrf52840_mdk_usb_dongle/` | `nrf52840_mdk_usb_dongle//zmk` board variant: upstream Zephyr board + UF2-bootloader flash layout (app at 0x1000, storage at 0xEC000) |
 | `build.yaml` | Build targets |
 | `local-build/docker-compose.yml` | Docker build config |
 

@@ -84,6 +84,9 @@ Download your choice of firmware from the Releases page. Choose a combination of
 > [!NOTE]
 > If you are flashing the firmware for the first time, or if you're switching between the dongle and the Bluetooth/USB configuration, flash the reset firmware to all the devices first
 
+> [!TIP]
+> **makerdiary nRF52840 MDK USB Dongle:** with the dongle plugged in, double-press its button within half a second. The LED turns green and a `UF2BOOT` drive appears. Holding the button while plugging in does not work, because the button is wired as reset. Copy `charybdis_dongle.uf2` from the `dongle_standard_mdk` build onto it. Use `settings_reset_mdk.uf2` to reset this dongle.
+
 
 ## Customization
 
@@ -121,6 +124,7 @@ The main build families are:
 
 - `bt`: Bluetooth split builds
 - `dongle_standard_nano`: the default no-screen dongle builds
+- `dongle_standard_mdk`: the dongle image for a [makerdiary nRF52840 MDK USB Dongle](https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/) (the halves come from `dongle_standard_nano`)
 - `dongle_prospector_*`: screen-enabled dongle builds using the Prospector adapter
 
 For any of the Prospector dongle firmwares, there are additional customization options.

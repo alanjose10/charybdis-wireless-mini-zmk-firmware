@@ -310,7 +310,12 @@ jobs:
         ART=$(if [[ -f "$BUILD_DIR/zephyr/zmk.uf2" ]]; then echo zmk.uf2; else echo zmk.bin; fi)
         EXT="${ART##*.}"
         # Include keymap in filename so multiple keymaps for the same shield don't overwrite.
-        FNAME="${SH}${KM:+-${KM}}.${EXT}"
+        # Reset images carry the entry name so per-board variants stay distinct in the release.
+        if [[ "$SH" == "settings_reset" ]]; then
+          FNAME="${NM}.${EXT}"
+        else
+          FNAME="${SH}${KM:+-${KM}}.${EXT}"
+        fi
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
         cp "$BUILD_DIR/zephyr/$ART" "$GITHUB_WORKSPACE/out/$NM/$FNAME"
 
@@ -392,6 +397,6 @@ jobs:
         name: Firmware Release ${{ github.ref_name }}
         files: |
           combo-artifacts/*.zip
-          combo-artifacts/firmware-settings_reset/settings_reset.uf2
+          combo-artifacts/firmware-settings_reset*/*.uf2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

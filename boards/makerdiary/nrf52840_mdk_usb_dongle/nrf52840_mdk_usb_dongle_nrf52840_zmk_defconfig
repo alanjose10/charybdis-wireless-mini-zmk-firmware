@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: MIT
+
+# Enable MPU
+CONFIG_ARM_MPU=y
+
+# Use pinctrl
+CONFIG_PINCTRL=y
+
+# enable GPIO
+CONFIG_GPIO=y
+
+# Link into the code partition declared in the .dts (0x1000, after the MBR),
+# not the upstream FLASH_LOAD_OFFSET fallback.
+CONFIG_USE_DT_CODE_PARTITION=y
+CONFIG_BUILD_OUTPUT_UF2=y
+
+CONFIG_MPU_ALLOW_FLASH_WRITE=y
+CONFIG_NVS=y
+CONFIG_SETTINGS_NVS=y
+CONFIG_FLASH=y
+CONFIG_FLASH_PAGE_LAYOUT=y
+CONFIG_FLASH_MAP=y
+
+# Upstream board defaults the console to a CDC ACM UART; keep USB to HID (+ Studio).
+CONFIG_BOARD_SERIAL_BACKEND_CDC_ACM=n
+
+CONFIG_ZMK_BLE=y
+CONFIG_ZMK_USB=y

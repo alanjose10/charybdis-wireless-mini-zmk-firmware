@@ -1,0 +1,54 @@
+/*
+ * SPDX-License-Identifier: MIT
+ *
+ * ZMK variant of the makerdiary nRF52840 MDK USB Dongle.
+ * Reuses the upstream Zephyr board and swaps in the flash layout of the
+ * stock makerdiary UF2 bootloader (an Adafruit nRF52 bootloader fork, no SoftDevice):
+ *   0x00000  MBR
+ *   0x01000  application
+ *   0xF4000  bootloader + its settings
+ * https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/programming/uf2boot/
+ */
+
+/dts-v1/;
+
+#include <../boards/makerdiary/nrf52840_mdk_usb_dongle/nrf52840_mdk_usb_dongle.dts>
+#include <common/nordic/nrf52840_uf2_boot_mode.dtsi>
+
+/ {
+	chosen {
+		zephyr,code-partition = &code_partition;
+	};
+};
+
+/* Upstream fstab-stock.dtsi targets Nordic's nRF5 bootloader + MCUboot slots; replace it. */
+&flash0 {
+	/delete-node/ partitions;
+
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		mbr_partition: partition@0 {
+			reg = <0x00000000 0x00001000>;
+		};
+		code_partition: partition@1000 {
+			reg = <0x00001000 0x000eb000>;
+		};
+		/* NVS settings storage (BT bonds, layer state, Studio keymap). */
+		storage_partition: partition@ec000 {
+			reg = <0x000ec000 0x00008000>;
+		};
+		boot_partition: partition@f4000 {
+			reg = <0x000f4000 0x0000c000>;
+		};
+	};
+};
+
+/* The upstream board routes the Zephyr console over a CDC ACM port. ZMK
+   does not need it, and it would add a third USB interface next to HID
+   and the Studio RPC port. */
+&board_cdc_acm_uart {
+	status = "disabled";
+};
