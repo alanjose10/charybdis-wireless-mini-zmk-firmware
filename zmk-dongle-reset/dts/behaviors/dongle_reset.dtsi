@@ -1,0 +1,19 @@
+#include <dt-bindings/zmk/reset.h>
+
+/ {
+    behaviors {
+        /omit-if-no-ref/ dongle_sys_reset: dongle_sys_reset {
+            compatible = "zmk,behavior-dongle-reset";
+            #binding-cells = <0>;
+            display-name = "Dongle Reset";
+        };
+
+        /omit-if-no-ref/ dongle_bootloader: dongle_bootloader {
+            compatible = "zmk,behavior-dongle-reset";
+            #binding-cells = <0>;
+            type = <RST_UF2>;
+            bootloader;
+            display-name = "Dongle Bootloader";
+        };
+    };
+};

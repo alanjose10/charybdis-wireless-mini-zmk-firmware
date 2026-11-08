@@ -1,0 +1,16 @@
+description: |
+  Reset behavior that acts on the central (dongle) regardless of which
+  half the key was pressed on.
+
+compatible: "zmk,behavior-dongle-reset"
+
+include: zero_param.yaml
+
+properties:
+  type:
+    type: int
+    default: 0
+    description: sys_reboot type. RST_WARM for a normal reset, RST_UF2 for the UF2 bootloader.
+  bootloader:
+    type: boolean
+    description: Enter the bootloader when retention boot mode is enabled.

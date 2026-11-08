@@ -1,0 +1,5 @@
+if(CONFIG_ZMK_BEHAVIOR_CAFFEINE)
+  zephyr_library()
+  zephyr_library_sources(src/behavior_caffeine.c)
+  zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
+endif()

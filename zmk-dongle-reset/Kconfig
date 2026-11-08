@@ -1,0 +1,9 @@
+config ZMK_BEHAVIOR_DONGLE_RESET
+    bool "Dongle reset behavior"
+    default y
+    depends on DT_HAS_ZMK_BEHAVIOR_DONGLE_RESET_ENABLED
+    # Runs on the central only; ZMK compiles behaviors there.
+    depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+    help
+      Reset or bootloader behavior that always acts on the central (dongle),
+      no matter which half the key was pressed on.

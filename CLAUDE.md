@@ -46,6 +46,8 @@ Output: `firmwares/charybdis_dongle/colemak_dh/`
 | `config/keymap_features/combos.dtsi` | Shared combos — used by ALL keymaps |
 | `config/keymap_features/macros.dtsi` | Shared macros — used by ALL keymaps |
 | `config/trackball/charybdis_pointer.dtsi` | Trackball input processors |
+| `zmk-caffeine/` | In-repo ZMK module: `zmk,behavior-caffeine` keep-awake toggle (passed via `ZMK_EXTRA_MODULES`) |
+| `zmk-dongle-reset/` | In-repo ZMK module: `&dongle_bootloader` / `&dongle_sys_reset`, central-locality reset so a key can reboot the dongle |
 | `build.yaml` | Build targets |
 | `local-build/docker-compose.yml` | Docker build config |
 
@@ -68,8 +70,8 @@ ADJ and SYSTEM are ZMK conditional layers (`zmk,conditional-layers`) — no dedi
 AUTO_MOUSE is activated automatically by `zip_temp_layer` in `charybdis_pointer.dtsi`.
 
 ### Trackball behaviour
-- Cursor frozen within 200ms of a keypress (auto-mouse layer suppressed)
-- After 200ms typing idle: AUTO_MOUSE activates → normal pointer speed; deactivates after 800ms of no trackball movement
+- Cursor frozen within 500ms of a keypress (auto-mouse layer suppressed)
+- After 500ms typing idle: AUTO_MOUSE activates → normal pointer speed; deactivates after 800ms of no trackball movement
 - SYM active (hold TAB): trackball scrolls (takes priority over AUTO_MOUSE)
 - SHORTCUTS active (hold ESC): slow pointer (takes priority over AUTO_MOUSE)
 
@@ -92,13 +94,13 @@ AUTO_MOUSE is activated automatically by `zip_temp_layer` in `charybdis_pointer.
 
 ### Outer columns
 
-- Left outer: `key_repeat` (00), `LSHIFT` (12), `none` (24)
-- Right outer: `caps_word` (11), `RSHIFT` (23), `none` (35)
+- Left outer: `key_repeat` (00), `BSPC` (12), `RET` (24)
+- Right outer: `caps_word` (11), `RSHIFT` (23), `ca` caffeine toggle (35)
 
 ### NAV layer (matches hillside NAV-MAC)
 
 - Left: scroll right/up/left (top), mouse move L/D/R (home), scroll up/down (bottom)
-- Right top: `Ctrl+Left` (prev desktop), LCLK, RCLK, `Ctrl+Right` (next desktop)
+- Right top: `Ctrl+Left` (prev desktop), `⌘[` (back), `⌘]` (forward), `Ctrl+Right` (next desktop)
 - Right home: arrow keys
 - Right bottom: Home, PgDn, PgUp, End
 
@@ -119,7 +121,8 @@ AUTO_MOUSE is activated automatically by `zip_temp_layer` in `charybdis_pointer.
 
 ### SYSTEM layer (SYM + NAV)
 
-- Left home: BT profiles 0–4
+- Left top outer (00): `dongle_bootloader` (reboots the dongle into UF2; stock `&bootloader` only resets the half you press it on)
+- Left home: BT profiles 0–4; right home outer (23): `BT_CLR`
 - Left bottom outer: bootloader
 - Right top: `OUT_USB`, `OUT_BLE`, ext power off/on
 - Right bottom outer: bootloader
@@ -138,6 +141,12 @@ Defined in `config/keymap_features/behaviors.dtsi`:
 | `mm_cm_sc` | mod-morph shift | comma → semicolon |
 | `mm_pr_col` | mod-morph shift | period → colon |
 
+Defined in `config/keymaps/colemak_dh.keymap`:
+
+| Behavior | Type | Notes |
+|----------|------|-------|
+| `ca` | caffeine toggle (`zmk-caffeine` module) | Press to start, press to stop. Every 1s moves one 400ms leg of an `mmv` square (UP/LEFT/DOWN/RIGHT in turn) on the dongle so the Mac stays awake; any keycode press turns it off. Tune via `CAFFEINE_*_MS` defines at the top of the keymap |
+
 ## Combos
 
 Defined in `config/keymap_features/combos.dtsi` (shared by all keymaps):
@@ -147,10 +156,9 @@ Defined in `config/keymap_features/combos.dtsi` (shared by all keymaps):
 | CapsWord | 17+18 (G+M) | BASE | `caps_word` |
 | ESC left | 1+2 (Q+W) | BASE | ESC |
 | ESC right | 9+10 (Y+SEMI) | BASE | ESC |
-| Bootloader left | 0+24 | SYSTEM | bootloader |
-| Bootloader right | 11+35 | SYSTEM | bootloader |
+| Bootloader | 12+23 | SYSTEM | bootloader (30ms timeout) |
 
-### Symbol combos (vertical same-column pairs, BASE only, 20ms timeout, 150ms prior-idle)
+### Symbol combos (vertical same-column pairs, BASE only, 40ms timeout, 200ms prior-idle, tuned for MX switches)
 
 | Combo | Keys | Symbol |
 |-------|------|--------|

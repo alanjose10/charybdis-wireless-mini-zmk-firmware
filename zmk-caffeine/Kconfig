@@ -1,0 +1,9 @@
+config ZMK_BEHAVIOR_CAFFEINE
+    bool "Caffeine behavior"
+    default y
+    depends on DT_HAS_ZMK_BEHAVIOR_CAFFEINE_ENABLED
+    # Behaviors and the behavior queue only exist on the central, same as ZMK core.
+    depends on !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+    help
+      Toggle behavior. While on, it taps its bindings in rotation on a timer
+      so the host does not go idle.

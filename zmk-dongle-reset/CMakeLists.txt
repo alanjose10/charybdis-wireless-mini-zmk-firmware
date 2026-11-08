@@ -1,0 +1,5 @@
+if(CONFIG_ZMK_BEHAVIOR_DONGLE_RESET)
+  zephyr_library()
+  zephyr_library_sources(src/behavior_dongle_reset.c)
+  zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
+endif()

@@ -6,12 +6,22 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <behaviors/mouse_keys.dtsi>
 #include <dt-bindings/zmk/ext_power.h>
+#include <behaviors/dongle_reset.dtsi>
 
 /* local overlays */
 #include "keymap_features/prospector_brightness.dtsi"
 #include "keymap_features/macros.dtsi"
 #include "keymap_features/behaviors.dtsi"
 #include "keymap_features/combos.dtsi"
+
+/* --- CAFFEINE (key 35) ---
+   Every INTERVAL the pointer moves one leg of a square (up, left, down,
+   right in turn), so the loop closes every four ticks. TAP is the length of
+   each leg; longer taps travel further because &mmv accelerates while held.
+   Any keycode press turns caffeine off. mode = "sequence" traces the whole
+   square per tick instead, for a subtler nudge. */
+#define CAFFEINE_INTERVAL_MS 1000
+#define CAFFEINE_TAP_MS      400
 
 / {
 /* --- KEYMAP CONFIG --- */
@@ -51,8 +61,10 @@
             #binding-cells = <0>;
             bindings = <&mmv MOVE_UP>, <&mmv MOVE_LEFT>,
                        <&mmv MOVE_DOWN>, <&mmv MOVE_RIGHT>;
-            interval-ms = <1000>;
-            tap-ms = <60>;
+            mode = "rotate";
+            interval-ms = <CAFFEINE_INTERVAL_MS>;
+            tap-ms = <CAFFEINE_TAP_MS>;
+            cancel-on-keypress;
         };
     };
 
@@ -153,7 +165,7 @@
             display-name = "Sys";
             bindings = <
 // ╭────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────┬────────────────────────╮                                                                                             ╭────────────────────────┬────────────────────────┬────────────────────────┬───────────────────────┬────────────────────────┬────────────────────────╮
-    &none                    &none                    &none                    &none                    &none                    &none                                                                                                                  &none                    &out OUT_USB             &out OUT_BLE             &ext_power EP_OFF       &ext_power EP_ON         &none
+    &dongle_bootloader       &none                    &none                    &none                    &none                    &none                                                                                                                  &none                    &out OUT_USB             &out OUT_BLE             &ext_power EP_OFF       &ext_power EP_ON         &none
 // ├────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤                                                                                             ├────────────────────────┼────────────────────────┼────────────────────────┼───────────────────────┼────────────────────────┼────────────────────────┤
     &none                    &bt BT_SEL 0             &bt BT_SEL 1             &bt BT_SEL 2             &bt BT_SEL 3             &bt BT_SEL 4                                                                                                           &none                    &none                    &none                    &none                   &none                    &bt BT_CLR
 // ├────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤                                                                                             ├────────────────────────┼────────────────────────┼────────────────────────┼───────────────────────┼────────────────────────┼────────────────────────┤
