@@ -188,4 +188,4 @@ Defined in `config/keymap_features/combos.dtsi` (shared by all keymaps):
 ## Reference keymap
 
 The `colemak_dh` keymap is designed to match the hillside46 keymap at
-`~/repos/zmk-config/config/hillside46.keymap` (Mac variant).
+`/Volumes/SSD9100/code/personal/zmk-config/config/hillside46.keymap` (GitHub alanjose10/zmk-config).
